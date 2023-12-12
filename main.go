@@ -1,11 +1,11 @@
 package main
 
-import "MerchantBank/repository"
+import "MerchantBank/app"
 
 func init() {
-	repository.LoadEnvVariable()
-	repository.ConnnectToDB()
-	repository.SycDatabase()
+	app.LoadEnvVariable()
+	app.ConnnectToDB()
+	app.SycDatabase()
 
 }
 
