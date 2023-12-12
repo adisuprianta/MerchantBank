@@ -3,6 +3,7 @@ package controllers
 import (
 	"MerchantBank/app"
 	"MerchantBank/models"
+	"fmt"
 	"github.com/gin-gonic/gin"
 	"github.com/golang-jwt/jwt/v5"
 	"golang.org/x/crypto/bcrypt"
@@ -102,23 +103,37 @@ func Login(c *gin.Context) {
 	})
 }
 
-//
-//func Logout(c *gin.Context) {
-//	var user models.User
-//	user, _ := c.Get("user")
-//
-//	app.DB.First(&user, "email = ?", user.Email)
-//
-//	if user.ID == 0 {
-//		c.JSON(http.StatusNotFound, gin.H{
-//			"error": "Failed credential",
-//		})
-//		return
-//	}
-//
-//	app.DB.Model(&user).Updates(models.User{
-//		Email:    user.Email,
-//		Password: user.Password,
-//		Enabled:  true,
-//	})
-//}
+func Logout(c *gin.Context) {
+
+	data, exits := c.Get("user")
+
+	if exits {
+		if user, ok := data.(models.User); ok {
+			app.DB.First(&user, "email = ?", user.Email)
+
+			if user.ID == 0 {
+				c.AbortWithStatus(http.StatusUnauthorized)
+			}
+			fmt.Println(user)
+
+			err := app.DB.Model(&user).Updates(map[string]interface{}{
+				"email":    user.Email,
+				"password": user.Password,
+				"enabled":  false,
+			}).Error
+			if err != nil {
+				c.JSON(http.StatusBadRequest, gin.H{
+					"error": "Failed to create token",
+				})
+				return
+			}
+			c.JSON(http.StatusCreated, gin.H{
+				"massege": "Successfully logout",
+			})
+			return
+		}
+	}
+
+	c.AbortWithStatus(http.StatusUnauthorized)
+
+}

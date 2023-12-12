@@ -2,6 +2,7 @@ package router
 
 import (
 	"MerchantBank/controllers"
+	"MerchantBank/middleware"
 	"github.com/gin-gonic/gin"
 )
 
@@ -11,7 +12,7 @@ func RouterApi() {
 	{
 		api.POST("auth/register", controllers.Sigup)
 		api.POST("auth/login", controllers.Login)
-		//api.GET("auth/logout", controllers.Logout)
+		api.GET("auth/logout", middleware.RequireAuth, controllers.Logout)
 	}
 	r.Run()
 }

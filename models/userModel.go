@@ -6,6 +6,6 @@ type User struct {
 	gorm.Model
 	Email    string `gorm:"unique"`
 	Password string
-	Enabled  bool
+	Enabled  bool       `json:"enabled"`
 	Transfer []Transfer `gorm:"foreignkey:UserId;association_foreignkey:ID;" json:"transfer"`
 }
