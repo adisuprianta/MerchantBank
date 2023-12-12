@@ -1,6 +1,9 @@
 package main
 
-import "MerchantBank/app"
+import (
+	"MerchantBank/app"
+	"MerchantBank/router"
+)
 
 func init() {
 	app.LoadEnvVariable()
@@ -10,5 +13,5 @@ func init() {
 }
 
 func main() {
-
+	router.RouterApi()
 }
