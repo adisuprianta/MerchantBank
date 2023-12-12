@@ -37,6 +37,10 @@ func Sigup(c *gin.Context) {
 	user := models.User{Email: authRequest.Email, Password: string(hash), Enabled: false}
 	result := app.DB.Create(&user)
 
+	logoModel := models.ActivityLog{Action: "Create", UserId: user.ID, Description: "Membuat akun baru"}
+
+	app.DB.Create(&logoModel)
+
 	if result.Error != nil {
 		c.JSON(http.StatusBadRequest, gin.H{
 			"error": "Failed to create user",
@@ -45,7 +49,8 @@ func Sigup(c *gin.Context) {
 	}
 
 	c.JSON(http.StatusCreated, gin.H{
-		"massege": "Successfully create user",
+		"status":  http.StatusCreated,
+		"massage": "Successfully create user",
 		"email":   authRequest.Email,
 	})
 }
@@ -98,8 +103,14 @@ func Login(c *gin.Context) {
 		})
 		return
 	}
+
+	logoModel := models.ActivityLog{Action: "Login", UserId: user.ID, Description: "Melakukan Login"}
+
+	app.DB.Create(&logoModel)
 	c.JSON(http.StatusOK, gin.H{
-		"token": tokenString,
+		"status":  http.StatusOK,
+		"massage": "successfully login ",
+		"token":   tokenString,
 	})
 }
 
@@ -127,8 +138,13 @@ func Logout(c *gin.Context) {
 				})
 				return
 			}
+
+			logoModel := models.ActivityLog{Action: "Logout", UserId: user.ID, Description: "Melakukan logout"}
+
+			app.DB.Create(&logoModel)
 			c.JSON(http.StatusCreated, gin.H{
-				"massege": "Successfully logout",
+				"status":  http.StatusOK,
+				"massage": `successfully logout `,
 			})
 			return
 		}
