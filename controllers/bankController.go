@@ -10,9 +10,38 @@ import (
 var requestBank struct {
 	Amount int64
 }
+var requestTopup struct {
+	Amount int64
+	BankId uint
+}
 
 func Topup(c *gin.Context) {
-	c.Bind(&requestBank)
+	c.Bind(&requestTopup)
+	data, exits := c.Get("user")
+
+	if exits {
+		if user, ok := data.(models.User); ok {
+			var bank models.Bank
+
+			app.DB.First(&bank, "user_id=? AND id=?", user.ID, requestTopup.BankId)
+
+			if bank.ID == 0 {
+				c.JSON(http.StatusNotFound, gin.H{
+					"error": "data not found",
+				})
+				return
+			}
+			totoalAmount := bank.Amount + requestTopup.Amount
+			app.DB.Model(&bank).Updates(models.Bank{
+				Amount: totoalAmount,
+			})
+			c.JSON(http.StatusOK, gin.H{
+				"status":  http.StatusOK,
+				"massege": "successfully top up amount",
+				"data":    bank,
+			})
+		}
+	}
 }
 func CreateAkunBank(c *gin.Context) {
 	c.Bind(&requestBank)
