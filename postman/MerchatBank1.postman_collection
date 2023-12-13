@@ -1,0 +1,153 @@
+{
+	"info": {
+		"_postman_id": "4687d3b8-71b6-4eef-a220-7f102d0823a7",
+		"name": "MerchatBank",
+		"schema": "https://schema.getpostman.com/json/collection/v2.0.0/collection.json",
+		"_exporter_id": "15090652"
+	},
+	"item": [
+		{
+			"name": "Transaction",
+			"item": [
+				{
+					"name": "Topup",
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": {
+								"token": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJleHAiOjE3MDI0ODM4NDYsImlhdCI6MTcwMjQ4MDI0NiwiaXNzIjoibWVyY2hhbnRfYmFuayIsInJvbGUiOiJ0ZXN0Iiwic3ViIjozfQ.80SMV6Ep5nf48hoxjmKW4-nVg7j27gteze_9RE2r0v0"
+							}
+						},
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n    \"Amount\":1000000,\r\n    \"BankId\":3\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": "http://localhost:8081/bank/topUp"
+					},
+					"response": []
+				},
+				{
+					"name": "Transfer",
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": {
+								"token": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJleHAiOjE3MDI0ODUzNTcsImlhdCI6MTcwMjQ4MTc1NywiaXNzIjoibWVyY2hhbnRfYmFuayIsInJvbGUiOiJ0ZXN0Iiwic3ViIjoyfQ.utmhvwyZXM79gwHDNyx-SaXXRNXrDkM1ySfkNxflQUc"
+							}
+						},
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n    \"Amount\"   : 10000,\r\n\t\"BankId\"   :2,\r\n    \"DestinationBankId\":1\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": "http://localhost:8081/api/transaction/transfer"
+					},
+					"response": []
+				}
+			]
+		},
+		{
+			"name": "auth",
+			"item": [
+				{
+					"name": "register",
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n    \"Email\": \"adisuprianta13@gmail.com\",\r\n    \"Password\":\"password\"\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": "http://localhost:8081/api/auth/register"
+					},
+					"response": []
+				},
+				{
+					"name": "Login",
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n    \"Email\":\"adisuprianta13@gmail.com\",\r\n    \"Password\":\"password\"\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": "http://localhost:8081/api/auth/login"
+					},
+					"response": []
+				}
+			]
+		},
+		{
+			"name": "logout",
+			"item": [
+				{
+					"name": "Logout",
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": {
+								"token": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJleHAiOjE3MDI0MDM2OTAsImlhdCI6MTcwMjQwMDA5MCwiaXNzIjoibWVyY2hhbnRfYmFuayIsInJvbGUiOiJ0ZXN0Iiwic3ViIjoyfQ.zavcpNFssrmvz-BTgZjS92OFGo_-aZz1vij2RGxz5lQ"
+							}
+						},
+						"method": "GET",
+						"header": [],
+						"url": "http://localhost:8081/api/logout"
+					},
+					"response": []
+				}
+			]
+		},
+		{
+			"name": "Bank",
+			"item": [
+				{
+					"name": "create",
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": {
+								"token": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJleHAiOjE3MDI0ODM4NDYsImlhdCI6MTcwMjQ4MDI0NiwiaXNzIjoibWVyY2hhbnRfYmFuayIsInJvbGUiOiJ0ZXN0Iiwic3ViIjozfQ.80SMV6Ep5nf48hoxjmKW4-nVg7j27gteze_9RE2r0v0"
+							}
+						},
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n    \"Amount\":10000\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": "http://localhost:8081/bank/create"
+					},
+					"response": []
+				}
+			]
+		}
+	]
+}
