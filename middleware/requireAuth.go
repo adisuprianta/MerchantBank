@@ -6,7 +6,6 @@ import (
 	"fmt"
 	"github.com/gin-gonic/gin"
 	"github.com/golang-jwt/jwt/v5"
-	"log"
 	"net/http"
 	"os"
 	"strings"
@@ -34,7 +33,7 @@ func RequireAuth(c *gin.Context) {
 	})
 
 	if err != nil {
-		log.Fatal(err)
+		c.AbortWithStatus(http.StatusUnauthorized)
 	}
 
 	if claims, ok := token.Claims.(jwt.MapClaims); ok {

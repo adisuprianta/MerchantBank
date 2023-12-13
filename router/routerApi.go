@@ -13,10 +13,12 @@ func RouterApi() {
 		api.POST("auth/register", controllers.Sigup)
 		api.POST("auth/login", controllers.Login)
 		api.GET("logout", middleware.RequireAuth, controllers.Logout)
-		bank := r.Group("/bank", middleware.RequireAuth)
+		api.POST("/bank", middleware.RequireAuth, controllers.CreateAkunBank)
+		trans := api.Group("/transaction", middleware.RequireAuth)
 		{
-			bank.POST("create", controllers.CreateAkunBank)
-			bank.POST("topUp", controllers.Topup)
+			trans.POST("/topUp", controllers.Topup)
+			trans.POST("/transfer", controllers.Transfer)
+
 		}
 	}
 	r.Run()
